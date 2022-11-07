@@ -1,0 +1,27 @@
+body {
+    background-color: antiquewhite;
+    
+}
+
+h1{
+    padding-top: 2em;
+}
+
+article{
+    padding-top: 2em;
+}
+
+.btn{
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.cancelBtn{
+    margin-left: 1em;
+}
+
+.list-group-item-action{
+    background-color: antiquewhite;
+    border: none;
+    border-bottom: 2px dotted rgba(47, 79, 79, 0.24);
+}

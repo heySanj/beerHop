@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head")  %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("../partials/nav")  %>
+
+    <div class="container">
+
+        <h1>Add a new Brewery</h1>
+  
+        <form action="/brewery" method="POST">
+          <div class="form-group">
+            <label for="name">Brewery name:</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Brewery name">
+          </div>
+          <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control" name="price" id="price" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="codescriptionmment" id="description" rows="3" placeholder="Describe the joint."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" name="location" id="location" placeholder="Where can we find it?">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+  
+    </div>
+
+    <%- include("../partials/footer")  %>
+  </body>
+  
+</html>
