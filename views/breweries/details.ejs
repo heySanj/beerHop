@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head")  %>
+  <body class="d-flex flex-column min-vh-100">
+    <%- include("../partials/nav")  %>
+    <div class="container">
+        <h1><%= brewery.name %></h1>
+        <hr>
+        <h4><em><%= brewery.description %></em></h4>
+        <hr>
+        <ul class="list-group">
+            <li class="list-group-item">Price of a Pint: $<%= brewery.price %></li>
+            <li class="list-group-item">Location: <%= brewery.location %></li>
+        </ul>
+        
+
+        <form action="/breweries/<%= brewery._id %>?_method=DELETE" method="POST" class="form-inline">
+          <a class="btn btn-primary" href="/breweries/<%= brewery._id %>/edit" role="button">Edit</a>
+          <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
+        </form>
+    </div>
+    <%- include("../partials/footer")  %>
+  </body>
+  
+</html>

@@ -4,7 +4,13 @@
   <body class="d-flex flex-column min-vh-100">
     <%- include("./partials/nav")  %>
     <div class="container">
-        <h1>Hello World! 🍻</h1>
+        <h1>Hop to your local Brewery! 🍻</h1>
+        <ul class="list-group">
+          <% for( let bar of breweries ) { %>
+            <a href="/breweries/<%= bar._id %>" class="list-group-item list-group-item-action"><%= bar.name %> - <%= bar.location %></a>
+          <% } %>
+        </ul>
+
     </div>
     <%- include("./partials/footer")  %>
   </body>

@@ -34,22 +34,60 @@ const Brewery = require('./models/brewery')
 
 // ======================= ROUTE SETUP ============================
 
-app.get('/', (req, res) => {
-    res.render('home')
+app.get('/', async (req, res) => {
+    res.redirect(`/breweries`)
 })
 
+app.get('/breweries', async (req, res) => {
+    const breweries = await Brewery.find({})  
+    res.render('home', { breweries })
+})
+
+
 // Add a brewery to the database
-app.get('/brewery/new', (req, res) => {
-    res.render('brewery/new')
+app.get('/breweries/new', (req, res) => {
+    res.render('breweries/new')
 })
 
 // Posting a new brewery
-app.post('/brewery', async (req, res) => {
+app.post('/breweries', async (req, res) => {
 
     const newBrewery = new Brewery(req.body)
     await newBrewery.save()
 
     res.redirect(`/`)
+})
+
+// Get brewery by ID and show details
+app.get('/breweries/:id', async (req, res) => {
+    const { id } = req.params
+    const brewery = await Brewery.findById(id)
+    res.render('breweries/details', { brewery })
+})
+
+// Edit a brewery
+app.get('/breweries/:id/edit', async (req, res) => {
+    const { id } = req.params
+    const brewery = await Brewery.findById(id)
+    res.render('breweries/edit', { brewery })
+})
+
+// Updating a brewery
+app.put('/breweries/:id', async (req, res) => {
+
+    const { id } = req.params
+    const brewery = await Brewery.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
+
+    res.redirect(`/breweries/${brewery._id}`)
+})
+
+// Deleting a brewery
+app.delete('/breweries/:id', async (req, res) => {
+
+    const { id } = req.params
+    const deletedBrewery = await Brewery.findByIdAndDelete(id)
+
+    res.redirect(`/breweries`)
 })
 
 
