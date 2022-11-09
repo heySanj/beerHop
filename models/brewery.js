@@ -16,6 +16,9 @@ const BrewerySchema = new mongoose.Schema({
     },
     location: {
         type: String
+    },
+    image: {
+        type: String
     }
 })
 

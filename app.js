@@ -1,6 +1,7 @@
 const path = require('path');
 const methodOverride = require('method-override')
 const express = require('express');
+const ejsMate = require('ejs-mate')
 const app = express();
 
 //To parse form data in POST request body:
@@ -9,9 +10,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 // To 'fake' put/patch/delete requests:
 app.use(methodOverride('_method'))
+
 // Views folder and EJS setup:
+app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
 
  // Serve static files such as JS scripts and CSS styles
 app.use(express.static(path.join(__dirname, '/public')))

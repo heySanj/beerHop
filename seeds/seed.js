@@ -39,7 +39,8 @@ const seedDB = async () => {
             name: randomName,
             price: randomPrice,
             description: randomDescription,
-            location: `${randomCity.city}, ${randomCity.admin_name}`
+            location: `${randomCity.city}, ${randomCity.admin_name}`,
+            image: 'https://source.unsplash.com/collection/9011780'
         })
         await brewery.save()
     }
