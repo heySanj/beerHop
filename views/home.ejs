@@ -1,8 +1,24 @@
 <% layout('layouts/boilerplate') %> 
 
-<h1>Hop to your local Brewery! 🍻</h1>
-<ul class="list-group">
+<h1 class="homeTitle">Hop to your local Brewery! 🍻</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 barCard mb-4"> <!-- g-3 adds gutter spacing -->
   <% for( let bar of breweries ) { %>
-    <a href="/breweries/<%= bar._id %>" class="list-group-item list-group-item-action"><%= bar.name %> - <%= bar.location %></a>
+    <!-- <a href="/breweries/<%= bar._id %>" class="list-group-item list-group-item-action"><%= bar.name %> - <%= bar.location %></a> -->    
+    <div class="col">
+      <div class="card lg-4 h-100">
+        <div class="card-img-top">
+          <img class="" src="<%= bar.image %>" alt="Brewery Image">
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title"><%= bar.name %></h5>
+          <p class="card-text"><%= bar.description %></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><%= bar.location %></small>
+          <a href="/breweries/<%= bar._id %>" class="btn btn-outline-dark">View</a>
+        </div>
+      </div>
+    </div>
   <% } %>
-</ul>
+</div>

@@ -15,9 +15,8 @@
         <li class="list-group-item">Location: <%= brewery.location %></li>
     </ul>
     
-    
-    <form action="/breweries/<%= brewery._id %>?_method=DELETE" method="POST" class="form-inline">
-      <a class="btn btn-primary" href="/breweries/<%= brewery._id %>/edit" role="button">Edit</a>
+    <a class="btn btn-dark" href="/breweries/<%= brewery._id %>/edit" role="button">Edit</a>
+    <form class="d-inline" action="/breweries/<%= brewery._id %>?_method=DELETE" method="POST" class="form-inline">      
       <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
     </form>
   </div>

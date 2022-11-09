@@ -15,42 +15,63 @@ body {
 body h1, body h2, body h3, body h4 {
   font-family: "Fraunces", serif;
 }
-
-h1 {
+body h1 {
   font-weight: 900;
   padding-top: 2em;
 }
-
-article {
+body article {
   padding-top: 2em;
 }
-
-.btn {
-  margin-top: 1em;
+body .btn .cancelBtn {
   margin-left: 1em;
 }
-
-.cancelBtn {
-  margin-left: 1em;
-}
-
-.imgBox {
+body .imgBox {
   overflow: hidden;
   padding: 2em;
 }
-.imgBox img {
+body .imgBox img {
   width: 100%;
   border-radius: 25px;
 }
-
-.list-group {
+body .list-group {
   padding: 2em 0;
 }
-
-.list-group-item {
+body .list-group-item {
   background-color: antiquewhite;
   border: none;
   border-bottom: 2px dotted rgba(47, 79, 79, 0.24);
+}
+
+.homeTitle {
+  font-size: 3em;
+  padding-bottom: 1em;
+  text-align: center;
+}
+
+.barCard .card-img-top {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  height: 300px;
+}
+.barCard .card-img-top img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.barCard h5 {
+  font-family: "Fraunces", serif;
+  font-weight: 900;
+}
+.barCard .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 footer {
