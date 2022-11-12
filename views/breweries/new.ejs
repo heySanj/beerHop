@@ -2,14 +2,18 @@
 
 <h1>Add a new Brewery</h1>
 
-<form action="/breweries" method="POST">
+<form action="/breweries" method="POST" novalidate class="needs-validation">
   <div class="form-group mb-3">
     <label for="name">Brewery name:</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Brewery name">
+    <input type="text" class="form-control" name="brewery[name]" id="name" placeholder="Brewery name" required>
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please enter a name.</div>
   </div>
   <div class="form-group mb-3">
     <label for="location">Location</label>
-    <input type="text" class="form-control" name="location" id="location" placeholder="Where can we find it?">
+    <input type="text" class="form-control" name="brewery[location]" id="location" placeholder="Where can we find it?" required>
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please enter a Location.</div>
   </div>
   <div class="form-group mb-3">
     <label for="price">Price:</label>
@@ -17,17 +21,23 @@
       <div class="input-group-prepend">
         <span class="input-group-text">$</span>
       </div>
-      <input type="number" class="form-control" name="price" id="price" placeholder="0.00">
+      <input type="number" class="form-control" name="brewery[price]" id="price" placeholder="0.00" required>      
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please enter a valid price.</div>
     </div>
   </div>
 
   <div class="form-group mb-3">
     <label for="image">Image URL:</label>
-    <input type="text" class="form-control" name="image" id="image" placeholder="What's the place look like?">
+    <input type="text" class="form-control" name="brewery[image]" id="image" placeholder="What's the place look like?" required>
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please enter a valid image.</div>
   </div>
   <div class="form-group mb-3">
     <label for="description">Description</label>
-    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Describe the joint."></textarea>
+    <textarea class="form-control" name="brewery[description]" id="description" rows="3" placeholder="Describe the joint." required></textarea>
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please enter a description.</div>
   </div>
   <button type="submit" class="btn btn-dark">Submit</button>
 </form>

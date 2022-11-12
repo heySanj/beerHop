@@ -2,6 +2,8 @@ const path = require('path');
 const methodOverride = require('method-override')
 const express = require('express');
 const ejsMate = require('ejs-mate')
+const catchAsync = require('./utils/catchAsync')
+const ExpressError = require('./utils/ExpressError')
 const app = express();
 
 //To parse form data in POST request body:
@@ -42,10 +44,10 @@ app.get('/', async (req, res) => {
     res.redirect(`/breweries`)
 })
 
-app.get('/breweries', async (req, res) => {
+app.get('/breweries', catchAsync(async (req, res, next) => {
     const breweries = await Brewery.find({})  
     res.render('home', { breweries })
-})
+}))
 
 
 // Add a brewery to the database
@@ -54,46 +56,62 @@ app.get('/breweries/new', (req, res) => {
 })
 
 // Posting a new brewery
-app.post('/breweries', async (req, res) => {
-
-    const newBrewery = new Brewery(req.body)
+app.post('/breweries', catchAsync(async (req, res, next) => {
+    console.log(req.body.brewery);
+    if(!req.body.brewery){
+        next(new ExpressError(404, 'Page not Found!'))
+    }
+    const newBrewery = new Brewery(req.body.brewery)
     await newBrewery.save()
 
     res.redirect(`/`)
-})
+}))
 
 // Get brewery by ID and show details
-app.get('/breweries/:id', async (req, res) => {
+app.get('/breweries/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params
     const brewery = await Brewery.findById(id)
     res.render('breweries/details', { brewery })
-})
+}))
 
 // Edit a brewery
-app.get('/breweries/:id/edit', async (req, res) => {
+app.get('/breweries/:id/edit', async (req, res, next) => {
     const { id } = req.params
     const brewery = await Brewery.findById(id)
     res.render('breweries/edit', { brewery })
 })
 
 // Updating a brewery
-app.put('/breweries/:id', async (req, res) => {
+app.put('/breweries/:id', catchAsync(async (req, res, next) => {
 
     const { id } = req.params
-    const brewery = await Brewery.findByIdAndUpdate(id, req.body, {runValidators: true, new: true})
+    const brewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
 
     res.redirect(`/breweries/${brewery._id}`)
-})
+}))
 
 // Deleting a brewery
-app.delete('/breweries/:id', async (req, res) => {
+app.delete('/breweries/:id', catchAsync(async (req, res, next) => {
 
     const { id } = req.params
     const deletedBrewery = await Brewery.findByIdAndDelete(id)
 
     res.redirect(`/breweries`)
+}))
+
+
+// ==========================  ERRORS  =============================
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError(404, 'Page not Found!'))
 })
 
+app.use((err, req, res, next) => {    
+    // Pull the error code from the error, defaulting to 500 if none were found
+    const { status = 500, message = "Something went wrong!" } = err;
+    res.status(status).send(`${status}: ${message}`)
+    // res.send("Oh boy! Something went wrong 😞")
+})
 
 // ===================================================================
 
