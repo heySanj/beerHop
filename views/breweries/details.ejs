@@ -1,14 +1,14 @@
 <% layout('./layouts/boilerplate') %> 
-<div class="row">
+<div class="row breweryDetails">
 
   <div class="col-lg-6 imgBox">
     <img src="<%= brewery.image %>" alt="Brewery Image">
   </div>
 
   <div class="col-lg-6">
-    <h1><%= brewery.name %></h1>
+    <h1 class="detailsHeader"><%= brewery.name %></h1>
     <hr>
-    <h4><em><%= brewery.description %></em></h4>
+    <h4 class="detailsDescription"><em><%= brewery.description %></em></h4>
     
     <ul class="list-group">
         <li class="list-group-item">Price of a Pint: $<%= brewery.price %></li>

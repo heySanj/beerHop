@@ -15,10 +15,6 @@ body {
 body h1, body h2, body h3, body h4 {
   font-family: "Fraunces", serif;
 }
-body h1 {
-  font-weight: 900;
-  padding-top: 2em;
-}
 body article {
   padding-top: 2em;
 }
@@ -44,6 +40,8 @@ body .list-group-item {
 
 .homeTitle {
   font-size: 3em;
+  font-weight: 900;
+  margin-top: 3em;
   padding-bottom: 1em;
   text-align: center;
 }
@@ -67,6 +65,21 @@ body .list-group-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.breweryDetails {
+  margin-top: 3em;
+}
+.breweryDetails .detailsHeader {
+  margin-top: 2em;
+  font-weight: 900;
+}
+
+.errorMessage h1 {
+  font-weight: 900;
+}
+.errorMessage p {
+  font-size: 1.3em;
 }
 
 .input-group-text {

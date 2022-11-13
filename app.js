@@ -4,6 +4,7 @@ const express = require('express');
 const ejsMate = require('ejs-mate')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
+const { brewerySchema } = require('./schemas')
 const app = express();
 
 //To parse form data in POST request body:
@@ -22,6 +23,22 @@ app.set('view engine', 'ejs')
  // Serve static files such as JS scripts and CSS styles
 app.use(express.static(path.join(__dirname, '/public')))
 
+// ====================== VALIDATION =============================
+
+const validateBrewery = (req, res, next) => {
+
+    // Try to validate the Joi schema
+    const { error } = brewerySchema.validate(req.body)
+    if(error){
+        // Error details are an array so need to mapped over to extract each message
+        const message = error.details.map(el => el.message).join(',')
+        throw new ExpressError(400, message)
+    } else {
+        next()
+    }
+
+}
+
 // ====================== MONGOOSE SETUP =============================
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -36,7 +53,8 @@ mongoose.connect(`${process.env.DB_URI}/${dbName}?retryWrites=true&w=majority`)
     })
 
 const db = mongoose.connection
-const Brewery = require('./models/brewery')
+const Brewery = require('./models/brewery');
+const { join } = require('path');
 
 // ======================= ROUTE SETUP ============================
 
@@ -56,11 +74,8 @@ app.get('/breweries/new', (req, res) => {
 })
 
 // Posting a new brewery
-app.post('/breweries', catchAsync(async (req, res, next) => {
-    console.log(req.body.brewery);
-    if(!req.body.brewery){
-        next(new ExpressError(404, 'Page not Found!'))
-    }
+app.post('/breweries', validateBrewery, catchAsync(async (req, res, next) => {
+
     const newBrewery = new Brewery(req.body.brewery)
     await newBrewery.save()
 
@@ -82,7 +97,7 @@ app.get('/breweries/:id/edit', async (req, res, next) => {
 })
 
 // Updating a brewery
-app.put('/breweries/:id', catchAsync(async (req, res, next) => {
+app.put('/breweries/:id', validateBrewery, catchAsync(async (req, res, next) => {
 
     const { id } = req.params
     const brewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
@@ -108,9 +123,9 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {    
     // Pull the error code from the error, defaulting to 500 if none were found
-    const { status = 500, message = "Something went wrong!" } = err;
-    res.status(status).send(`${status}: ${message}`)
-    // res.send("Oh boy! Something went wrong 😞")
+    const { status = 500 } = err;
+    if(!err.message) err.message = "Oh no! Something went wrong! 😞"    
+    res.status(status).render('error', { err })
 })
 
 // ===================================================================
