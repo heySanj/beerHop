@@ -12,8 +12,9 @@ body {
   background-color: antiquewhite;
   font-family: "Rubik", sans-serif;
 }
-body h1, body h2, body h3, body h4 {
+body h1 {
   font-family: "Fraunces", serif;
+  font-weight: 900;
 }
 body article {
   padding-top: 2em;
@@ -23,7 +24,6 @@ body .btn .cancelBtn {
 }
 body .imgBox {
   overflow: hidden;
-  padding: 2em;
 }
 body .imgBox img {
   width: 100%;
@@ -85,6 +85,25 @@ body .list-group-item {
 .input-group-text {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.reviewBox {
+  background-color: rgb(49, 49, 49);
+  border-radius: 25px;
+  padding: 2em;
+  margin-bottom: 2em;
+  color: antiquewhite;
+}
+.reviewBox h1 {
+  color: rgb(255, 193, 23);
+}
+.reviewBox label {
+  color: rgba(255, 255, 255, 0.342);
+}
+.reviewBox textarea, .reviewBox textarea:focus {
+  background-color: rgba(0, 0, 0, 0.747);
+  border-color: rgba(0, 0, 0, 0);
+  color: antiquewhite;
 }
 
 footer {

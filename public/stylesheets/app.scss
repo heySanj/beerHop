@@ -16,8 +16,9 @@ body {
     background-color: $backgroundColour;
     font-family: $textFont;
 
-    h1, h2, h3, h4 {
-        font-family: $headingFont; 
+    h1{
+        font-family: $headingFont;
+        font-weight: 900;
     }
 
     article{
@@ -37,7 +38,7 @@ body {
 
     .imgBox{
         overflow: hidden;
-        padding: 2em;
+        // padding: 2em;
         img{
             width: 100%;
             border-radius: 25px;
@@ -110,6 +111,27 @@ body {
     border-bottom-right-radius: 0;
 }
 
+.reviewBox{
+    background-color: $borderColour;
+    border-radius: 25px;
+    padding: 2em;
+    margin-bottom: 2em;
+    color: $backgroundColour;
+
+    h1{
+        color: $mainColour;
+    }
+
+    label {
+        color: rgba(255, 255, 255, 0.342);
+    }
+
+    textarea, textarea:focus {
+        background-color: rgba(0, 0, 0, 0.747);
+        border-color:rgba(0, 0, 0, 0);
+        color: $backgroundColour;
+    }
+}
 
 footer{
     padding: 2em;

@@ -4,7 +4,7 @@ const express = require('express');
 const ejsMate = require('ejs-mate')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
-const { brewerySchema } = require('./schemas')
+const { brewerySchema, reviewSchema } = require('./schemas')
 const app = express();
 
 //To parse form data in POST request body:
@@ -39,6 +39,20 @@ const validateBrewery = (req, res, next) => {
 
 }
 
+const validateReview = (req, res, next) => {
+    console.log(req.body);
+    // Try to validate the Joi schema
+    const { error } = reviewSchema.validate(req.body)
+    if(error){
+        // Error details are an array so need to mapped over to extract each message
+        const message = error.details.map(el => el.message).join(',')
+        throw new ExpressError(400, message)
+    } else {
+        next()
+    }
+
+}
+
 // ====================== MONGOOSE SETUP =============================
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -54,6 +68,7 @@ mongoose.connect(`${process.env.DB_URI}/${dbName}?retryWrites=true&w=majority`)
 
 const db = mongoose.connection
 const Brewery = require('./models/brewery');
+const Review = require('./models/review')
 const { join } = require('path');
 
 // ======================= ROUTE SETUP ============================
@@ -85,8 +100,20 @@ app.post('/breweries', validateBrewery, catchAsync(async (req, res, next) => {
 // Get brewery by ID and show details
 app.get('/breweries/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params
-    const brewery = await Brewery.findById(id)
+    const brewery = await Brewery.findById(id).populate('reviews')
     res.render('breweries/details', { brewery })
+}))
+
+// Post a review on a brewery
+app.post('/breweries/:id/reviews', validateReview, catchAsync(async (req, res, next) => {
+    const { id } = req.params
+    const brewery = await Brewery.findById(id)
+    const review = new Review(req.body.review)
+    brewery.reviews.push(review)
+    await review.save()
+    await brewery.save()
+
+    res.redirect(`/breweries/${brewery._id}`)
 }))
 
 // Edit a brewery
@@ -112,6 +139,18 @@ app.delete('/breweries/:id', catchAsync(async (req, res, next) => {
     const deletedBrewery = await Brewery.findByIdAndDelete(id)
 
     res.redirect(`/breweries`)
+}))
+
+// Deleting a review
+app.delete('/breweries/:id/reviews/:reviewId', catchAsync(async (req, res, next) => {
+
+    const { id, reviewId } = req.params
+
+    // Pull any reviews from the 'reviews' array, where the reviewId is the same as the one we are deleting
+    await Brewery.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+    await Review.findByIdAndDelete(reviewId)
+
+    res.redirect(`/breweries/${id}`)
 }))
 
 
