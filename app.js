@@ -2,9 +2,13 @@ const path = require('path');
 const methodOverride = require('method-override')
 const express = require('express');
 const ejsMate = require('ejs-mate')
+const session = require('express-session')
+const flash = require('connect-flash')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 const { brewerySchema, reviewSchema } = require('./schemas')
+
+
 const app = express();
 
 //To parse form data in POST request body:
@@ -19,39 +23,41 @@ app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-
- // Serve static files such as JS scripts and CSS styles
+// Serve static files such as JS scripts and CSS styles
 app.use(express.static(path.join(__dirname, '/public')))
+
+// ================== SESSIONS & FLASH ===========================
+
+const sessionConfig = {
+    secret: 'thissecretshouldbebetter!',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true, // Extra security for your cookies!
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Current time in milliseconds + 1 week in milliseconds
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    },
+    // store: this will eventually be a different store!
+
+}
+app.use(session(sessionConfig))
+app.use(flash())
+
+// On each request, if there is a flash: pass it on to the local params.
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
+    next()
+})
+
+// ====================== ROUTES ================================
+
+const breweryRoutes = require('./routes/breweries')
+const reviewRoutes = require('./routes/reviews')
 
 // ====================== VALIDATION =============================
 
-const validateBrewery = (req, res, next) => {
 
-    // Try to validate the Joi schema
-    const { error } = brewerySchema.validate(req.body)
-    if(error){
-        // Error details are an array so need to mapped over to extract each message
-        const message = error.details.map(el => el.message).join(',')
-        throw new ExpressError(400, message)
-    } else {
-        next()
-    }
-
-}
-
-const validateReview = (req, res, next) => {
-    console.log(req.body);
-    // Try to validate the Joi schema
-    const { error } = reviewSchema.validate(req.body)
-    if(error){
-        // Error details are an array so need to mapped over to extract each message
-        const message = error.details.map(el => el.message).join(',')
-        throw new ExpressError(400, message)
-    } else {
-        next()
-    }
-
-}
 
 // ====================== MONGOOSE SETUP =============================
 require('dotenv').config();
@@ -73,85 +79,14 @@ const { join } = require('path');
 
 // ======================= ROUTE SETUP ============================
 
+
+app.use('/breweries', breweryRoutes)
+app.use('/breweries/:id/reviews', reviewRoutes)
+
 app.get('/', async (req, res) => {
     res.redirect(`/breweries`)
 })
 
-app.get('/breweries', catchAsync(async (req, res, next) => {
-    const breweries = await Brewery.find({})  
-    res.render('home', { breweries })
-}))
-
-
-// Add a brewery to the database
-app.get('/breweries/new', (req, res) => {
-    res.render('breweries/new')
-})
-
-// Posting a new brewery
-app.post('/breweries', validateBrewery, catchAsync(async (req, res, next) => {
-
-    const newBrewery = new Brewery(req.body.brewery)
-    await newBrewery.save()
-
-    res.redirect(`/`)
-}))
-
-// Get brewery by ID and show details
-app.get('/breweries/:id', catchAsync(async (req, res, next) => {
-    const { id } = req.params
-    const brewery = await Brewery.findById(id).populate('reviews')
-    res.render('breweries/details', { brewery })
-}))
-
-// Post a review on a brewery
-app.post('/breweries/:id/reviews', validateReview, catchAsync(async (req, res, next) => {
-    const { id } = req.params
-    const brewery = await Brewery.findById(id)
-    const review = new Review(req.body.review)
-    brewery.reviews.push(review)
-    await review.save()
-    await brewery.save()
-
-    res.redirect(`/breweries/${brewery._id}`)
-}))
-
-// Edit a brewery
-app.get('/breweries/:id/edit', async (req, res, next) => {
-    const { id } = req.params
-    const brewery = await Brewery.findById(id)
-    res.render('breweries/edit', { brewery })
-})
-
-// Updating a brewery
-app.put('/breweries/:id', validateBrewery, catchAsync(async (req, res, next) => {
-
-    const { id } = req.params
-    const brewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
-
-    res.redirect(`/breweries/${brewery._id}`)
-}))
-
-// Deleting a brewery
-app.delete('/breweries/:id', catchAsync(async (req, res, next) => {
-
-    const { id } = req.params
-    const deletedBrewery = await Brewery.findByIdAndDelete(id)
-
-    res.redirect(`/breweries`)
-}))
-
-// Deleting a review
-app.delete('/breweries/:id/reviews/:reviewId', catchAsync(async (req, res, next) => {
-
-    const { id, reviewId } = req.params
-
-    // Pull any reviews from the 'reviews' array, where the reviewId is the same as the one we are deleting
-    await Brewery.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
-    await Review.findByIdAndDelete(reviewId)
-
-    res.redirect(`/breweries/${id}`)
-}))
 
 
 // ==========================  ERRORS  =============================

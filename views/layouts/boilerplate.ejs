@@ -19,6 +19,7 @@
         <%- include('../partials/nav') %> 
         
         <main class="container">
+            <%- include('../partials/flash') %> 
             <%- body %>
         </main>
         
@@ -30,28 +31,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     
         <!-- Form Validation -->
-        <script>
-            // Starter JavaScript for disabling form submissions if there are invalid fields
-            (function () {
-              'use strict'
-          
-              // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.querySelectorAll('.needs-validation')
-          
-              // Loop over them and prevent submission
-              Array.from(forms) // convert forms collection into an array
-                .forEach(function (form) { // loop over forms and execute function below for each form
-                  form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                      event.preventDefault()
-                      event.stopPropagation()
-                    }
-          
-                    form.classList.add('was-validated')
-                  }, false)
-                })
-            })()
-          </script>
+        <script src="/javascripts/validateForms.js"></script>
 
 
         <%- include('../partials/footer') %> 
