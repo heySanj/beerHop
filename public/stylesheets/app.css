@@ -12,6 +12,9 @@ body {
   background-color: antiquewhite;
   font-family: "Rubik", sans-serif;
 }
+body .container {
+  padding-top: 2em;
+}
 body h1 {
   font-family: "Fraunces", serif;
   font-weight: 900;

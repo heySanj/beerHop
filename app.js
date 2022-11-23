@@ -6,8 +6,8 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
-const { brewerySchema, reviewSchema } = require('./schemas')
-
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
 const app = express();
 
@@ -43,17 +43,28 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash())
 
+// ================== PASSPORT & AUTH ===========================
+
+const User = require('./models/user')
+
+app.use(passport.initialize())
+app.use(passport.session()) // Make sure the app is using session() BEFORE passport uses it
+passport.use(new LocalStrategy(User.authenticate())) // authenticate() is a method added to the User
+
+// Tell passport how to store and unstore user data in a session
+// (Using the methods added to User schema by passport-local-mongoose)
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+// ==================== PASSING VARIABLES TO EVERY ROUTE ========================
+
 // On each request, if there is a flash: pass it on to the local params.
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user // Also pass through the currently logged in user
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
 })
-
-// ====================== ROUTES ================================
-
-const breweryRoutes = require('./routes/breweries')
-const reviewRoutes = require('./routes/reviews')
 
 // ====================== VALIDATION =============================
 
@@ -79,9 +90,13 @@ const { join } = require('path');
 
 // ======================= ROUTE SETUP ============================
 
+const breweryRoutes = require('./routes/breweries')
+const reviewRoutes = require('./routes/reviews')
+const userRoutes = require('./routes/users')
 
 app.use('/breweries', breweryRoutes)
 app.use('/breweries/:id/reviews', reviewRoutes)
+app.use('/user', userRoutes)
 
 app.get('/', async (req, res) => {
     res.redirect(`/breweries`)

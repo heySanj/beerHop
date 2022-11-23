@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync')
 const ExpressError = require('../utils/ExpressError')
 const Brewery = require('../models/brewery');
 const { brewerySchema } = require('../schemas')
-
+const { isLoggedIn } = require('../utils/middleware')
 
 // ====================== VALIDATION =============================
 
@@ -31,12 +31,12 @@ router.get('/', catchAsync(async (req, res, next) => {
 
 
 // Add a brewery to the database
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('breweries/new')
 })
 
 // Posting a new brewery
-router.post('/', validateBrewery, catchAsync(async (req, res, next) => {   
+router.post('/', isLoggedIn, validateBrewery, catchAsync(async (req, res, next) => {   
     const newBrewery = new Brewery(req.body.brewery)
     await newBrewery.save()
 
@@ -59,7 +59,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 
 
 // Edit a brewery
-router.get('/:id/edit', async (req, res, next) => {
+router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
     const { id } = req.params
     const brewery = await Brewery.findById(id)
 
@@ -72,7 +72,7 @@ router.get('/:id/edit', async (req, res, next) => {
 })
 
 // Updating a brewery
-router.put('/:id', validateBrewery, catchAsync(async (req, res, next) => {
+router.put('/:id', isLoggedIn, validateBrewery, catchAsync(async (req, res, next) => {
 
     const { id } = req.params
     const brewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
@@ -82,7 +82,7 @@ router.put('/:id', validateBrewery, catchAsync(async (req, res, next) => {
 }))
 
 // Deleting a brewery
-router.delete('/:id', catchAsync(async (req, res, next) => {
+router.delete('/:id', isLoggedIn, catchAsync(async (req, res, next) => {
 
     const { id } = req.params
     const deletedBrewery = await Brewery.findByIdAndDelete(id)
