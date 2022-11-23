@@ -1,26 +1,9 @@
 const express = require('express')
 const router = express.Router();
-const catchAsync = require('../utils/catchAsync')
-const ExpressError = require('../utils/ExpressError')
+// const catchAsync = require('../utils/catchAsync')
 const Brewery = require('../models/brewery');
-const { brewerySchema } = require('../schemas')
-const { isLoggedIn } = require('../utils/middleware')
+const { isLoggedIn, isAuthor, validateBrewery, catchAsync } = require('../utils/middleware')
 
-// ====================== VALIDATION =============================
-
-const validateBrewery = (req, res, next) => {
-
-    // Try to validate the Joi schema
-    const { error } = brewerySchema.validate(req.body)
-    if(error){
-        // Error details are an array so need to mapped over to extract each message
-        const message = error.details.map(el => el.message).join(',')
-        throw new ExpressError(400, message)
-    } else {
-        next()
-    }
-
-}
 
 // ======================= ROUTE SETUP ============================
 
@@ -38,6 +21,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 // Posting a new brewery
 router.post('/', isLoggedIn, validateBrewery, catchAsync(async (req, res, next) => {   
     const newBrewery = new Brewery(req.body.brewery)
+    newBrewery.author = req.user._id
     await newBrewery.save()
 
     req.flash('success', `Successfully added ${newBrewery.name}!`)
@@ -47,7 +31,13 @@ router.post('/', isLoggedIn, validateBrewery, catchAsync(async (req, res, next) 
 // Get brewery by ID and show details
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params
-    const brewery = await Brewery.findById(id).populate('reviews')
+    const brewery = await Brewery.findById(id).populate({
+        // Populate reveiws and then populate the author of each review
+        path: 'reviews',        
+        populate: {
+            path: 'author'
+        }
+    }).populate('author') // And also populate the author of each Brewery
 
     if(!brewery){
         req.flash('error', 'Sorry, that brewery could not be found. 😞')
@@ -59,7 +49,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 
 
 // Edit a brewery
-router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params
     const brewery = await Brewery.findById(id)
 
@@ -69,20 +59,20 @@ router.get('/:id/edit', isLoggedIn, async (req, res, next) => {
     }
     
     res.render('breweries/edit', { brewery })
-})
+}))
 
 // Updating a brewery
-router.put('/:id', isLoggedIn, validateBrewery, catchAsync(async (req, res, next) => {
-
+router.put('/:id', isLoggedIn, isAuthor, validateBrewery, catchAsync(async (req, res, next) => {
+    
     const { id } = req.params
-    const brewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
-    req.flash('success', `Successfully updated ${brewery.name}!`)
+    const updatedBrewery = await Brewery.findByIdAndUpdate(id, req.body.brewery, {runValidators: true, new: true})
+    req.flash('success', `Successfully updated ${updatedBrewery.name}!`)
 
-    res.redirect(`/breweries/${brewery._id}`)
+    res.redirect(`/breweries/${updatedBrewery._id}`)
 }))
 
 // Deleting a brewery
-router.delete('/:id', isLoggedIn, catchAsync(async (req, res, next) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res, next) => {
 
     const { id } = req.params
     const deletedBrewery = await Brewery.findByIdAndDelete(id)

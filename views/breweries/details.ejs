@@ -13,12 +13,16 @@
     <ul class="list-group">
         <li class="list-group-item">Price of a Pint: $<%= brewery.price %></li>
         <li class="list-group-item">Location: <%= brewery.location %></li>
+        <li class="list-group-item text-muted">Submitted by: <%= brewery.author.username %></li>
     </ul>
-    
-    <a class="btn btn-dark" href="/breweries/<%= brewery._id %>/edit" role="button">Edit</a>
-    <form class="d-inline" action="/breweries/<%= brewery._id %>?_method=DELETE" method="POST" class="form-inline">      
-      <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
-    </form>
+
+    <% if ( currentUser && brewery.author.equals(currentUser._id)) { %>
+      <a class="btn btn-dark" href="/breweries/<%= brewery._id %>/edit" role="button">Edit</a>
+      <form class="d-inline" action="/breweries/<%= brewery._id %>?_method=DELETE" method="POST" class="form-inline">      
+        <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
+      </form>
+    <% } %>
+
   </div>
 
   <!-- Review section here -->
@@ -30,10 +34,15 @@
           <% for( let review of brewery.reviews ) { %>
             <li class="list-group-item">
               <h5 class="pt-3"><%= review.rating %>/5</h5>
-              <p class="d-inline"><%= review.body %> </p>
-              <form class="d-flex justify-content-end" action="/breweries/<%= brewery._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="form-inline">      
-                <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
-              </form>
+              <p class="d-inline"><%= review.body %></p>
+              <em class="text-muted"> - <%= review.author.username %></em>
+
+              <% if ( currentUser && review.author.equals(currentUser._id)) { %>
+                <form class="form-inline float-end" action="/breweries/<%= brewery._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">      
+                  <button type="submit" class="btn btn-outline-danger cancelBtn"><b>x</b></button>
+                </form>
+              <% } %>
+
             </li>
 
           <% } %>
@@ -43,23 +52,26 @@
     <div class="mt-5"></div>
   <% } %>
 
-  <div class="reviewBox col-lg-12">
-    <h1 class="mb-5">Leave your review</h1>
-    <form action="/breweries/<%= brewery._id %>/reviews" method="POST" novalidate class="needs-validation">
-      <div class="form-group mb-3">
-        <label for="rating" class="form-label">Rating</label>
-        <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Please enter your thoughts on the brewery.</div>
-      </div>
-      <div class="form-group mb-3">
-        <label for="body" class="form-label">Submit a Review</label>
-        <textarea class="form-control" name="review[body]" id="body" rows="5" placeholder="What did you think of the place?" required></textarea>
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Please enter your thoughts on the brewery.</div>
-      </div>
-      <button type="submit" class="btn btn-light">Submit</button>
-    </form>
-  </div>
+  <% if (currentUser) { %>
+    <div class="reviewBox col-lg-12">
+      <h1 class="mb-5">Leave your review</h1>
+      <form action="/breweries/<%= brewery._id %>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="form-group mb-3">
+          <label for="rating" class="form-label">Rating</label>
+          <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your thoughts on the brewery.</div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="body" class="form-label">Submit a Review</label>
+          <textarea class="form-control" name="review[body]" id="body" rows="5" placeholder="What did you think of the place?" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your thoughts on the brewery.</div>
+        </div>
+        <button type="submit" class="btn btn-light">Submit</button>
+      </form>
+    </div>
+  <% } %>
+
 </div>
 

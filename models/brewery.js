@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Review = require('./review')
+// const User = require('./user')
 const Schema = mongoose.Schema
 
 const BrewerySchema = new Schema({
@@ -20,6 +21,10 @@ const BrewerySchema = new Schema({
     },
     image: {
         type: String
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     reviews: [
         {

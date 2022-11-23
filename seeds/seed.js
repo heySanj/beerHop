@@ -56,6 +56,7 @@ const seedDB = async () => {
             price: randomPrice,
             description: randomDescription,
             location: `${randomCity.city}, ${randomCity.admin_name}`,
+            author: '637d88e18682534143525143',
             image: await seedImg()
             // image: 'https://source.unsplash.com/collection/9011780'
         })
