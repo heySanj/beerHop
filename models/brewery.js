@@ -3,6 +3,25 @@ const Review = require('./review')
 // const User = require('./user')
 const Schema = mongoose.Schema
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+})
+
+// Calling this function will return a thumbnail version of the image from the Cloudinary API
+ImageSchema.virtual('thumbnail').get(function() {
+    return this.url.replace('/upload', '/upload/c_thumb,h_200,w_200')
+})
+
+ImageSchema.virtual('card').get(function() {
+    return this.url.replace('/upload', '/upload/q_auto:eco/c_fill,g_auto,h_480,w_640')
+})
+
+ImageSchema.virtual('carousel').get(function() {
+    return this.url.replace('/upload', '/upload/c_fill,g_auto,h_2400,w_1600/q_auto:eco')
+})
+
+
 const BrewerySchema = new Schema({
     name: {
         type: String,
@@ -19,9 +38,7 @@ const BrewerySchema = new Schema({
     location: {
         type: String
     },
-    image: {
-        type: String
-    },
+    images: [ImageSchema],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
 const path = require('path');
 const methodOverride = require('method-override')
 const express = require('express');
@@ -71,7 +74,7 @@ app.use((req, res, next) => {
 
 
 // ====================== MONGOOSE SETUP =============================
-require('dotenv').config();
+
 const mongoose = require('mongoose');
 const dbName = 'beerHop'
 

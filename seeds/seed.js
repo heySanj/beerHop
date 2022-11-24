@@ -57,8 +57,22 @@ const seedDB = async () => {
             description: randomDescription,
             location: `${randomCity.city}, ${randomCity.admin_name}`,
             author: '637d88e18682534143525143',
-            image: await seedImg()
+            // image: await seedImg()
             // image: 'https://source.unsplash.com/collection/9011780'
+            images: [
+              {
+                url: 'https://res.cloudinary.com/dx5amze3b/image/upload/v1669256550/beerHop/lzkoodrbqtz1kcjwh9gi.jpg',
+                filename: 'beerHop/lzkoodrbqtz1kcjwh9gi',
+              },
+              {
+                url: 'https://res.cloudinary.com/dx5amze3b/image/upload/v1669256552/beerHop/o50nqosc4rup2ysvss6w.jpg',
+                filename: 'beerHop/o50nqosc4rup2ysvss6w',
+              },
+              {
+                url: 'https://res.cloudinary.com/dx5amze3b/image/upload/v1669256554/beerHop/htd38de0qdo1eatdzhdb.jpg',
+                filename: 'beerHop/htd38de0qdo1eatdzhdb',
+              }
+            ]
         })
         await brewery.save()
     }

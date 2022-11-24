@@ -2,7 +2,7 @@
 
 <h1>Add a new Brewery</h1>
 
-<form action="/breweries" method="POST" novalidate class="needs-validation">
+<form action="/breweries" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
   <div class="form-group mb-3">
     <label for="name">Brewery name:</label>
     <input type="text" class="form-control" name="brewery[name]" id="name" placeholder="Brewery name" required>
@@ -28,11 +28,20 @@
   </div>
 
   <div class="form-group mb-3">
+    <label for="image">Image:</label>
+    <input type="file" class="form-control" name="image" id="image" multiple required>
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please enter a valid image.</div>
+  </div>
+
+
+  <!-- <div class="form-group mb-3">
     <label for="image">Image URL:</label>
     <input type="text" class="form-control" name="brewery[image]" id="image" placeholder="What's the place look like?" required>
     <div class="valid-feedback">Looks good!</div>
     <div class="invalid-feedback">Please enter a valid image.</div>
-  </div>
+  </div> -->
+
   <div class="form-group mb-3">
     <label for="description">Description</label>
     <textarea class="form-control" name="brewery[description]" id="description" rows="3" placeholder="Describe the joint." required></textarea>
