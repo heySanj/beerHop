@@ -8,6 +8,11 @@ const axios = require('axios')
 
 const { storage, cloudinary } = require('../utils/cloudinary')
 
+// MAPBOX
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
+const mapBoxToken = process.env.MAPBOX_PUBLIC_TOKEN
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken }) // Configure the access Token for mapbox
+
 // ====================== MONGOOSE SETUP =============================
 require('dotenv').config();
 const mongoose = require('mongoose');
@@ -36,7 +41,7 @@ const Brewery = require('../models/brewery')
           collections: 9011780,
         },
       })
-      return resp.data.urls.small
+      return resp.data.urls.full
     } catch (err) {
       console.error(err)
     }
@@ -47,7 +52,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)]
 
 const seedDB = async () => {
 
-    await Brewery.deleteMany({}) // Delete all existing data before seeding with new data
+    // await Brewery.deleteMany({}) // Delete all existing data before seeding with new data
 
     // Generate 50 breweries
     for (let i = 0; i < 6; i++){
@@ -77,6 +82,15 @@ const seedDB = async () => {
             url: result.secure_url,
             filename: result.public_id
           }))
+
+
+        // Get geometry data from geocoder and save to the new Brewery
+        const geoData = await geocoder.forwardGeocode({
+            query: brewery.location,
+            limit: 1
+        }).send()
+
+        brewery.geometry = geoData.body.features[0].geometry
 
         await brewery.save()
     }
