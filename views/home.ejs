@@ -10,7 +10,12 @@
       <div class="card lg-4 h-100">
 
         <div class="card-img-top">          
-          <img class="" src="<%= bar.images[0].card %>" alt="Brewery Image">
+          <% if (bar.images.length) { %>
+            <img src="<%= bar.images[0].card %>" alt="Brewery Image">
+          <% } else { %>           
+            <img src="https://res.cloudinary.com/dx5amze3b/image/upload/q_auto:eco/c_fill,g_auto,h_480,w_640/v1669271510/beerHop/llguhbracrompilumiwd.jpg" alt="Brewery Image">
+          <% } %>
+          
         </div>
 
         <div class="card-body">

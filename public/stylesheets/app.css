@@ -109,6 +109,17 @@ body .list-group-item {
   color: antiquewhite;
 }
 
+#detailsAccordion .mapButton {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+  font-size: 1.3em;
+  padding-left: 0;
+}
+#detailsAccordion #map {
+  width: 100%;
+  height: 300px;
+}
+
 footer {
   padding: 2em;
 }/*# sourceMappingURL=app.css.map */

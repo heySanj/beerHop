@@ -50,7 +50,7 @@ const seedDB = async () => {
     await Brewery.deleteMany({}) // Delete all existing data before seeding with new data
 
     // Generate 50 breweries
-    for (let i = 0; i < 20; i++){
+    for (let i = 0; i < 6; i++){
 
         const randomCity = cities[Math.floor(Math.random()*cities.length)]
         const randomName = `${sample(name)} ${sample(suffix)}`
