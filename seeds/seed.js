@@ -70,7 +70,11 @@ const seedDB = async () => {
             author: '637d88e18682534143525143',
             // image: await seedImg()
             // image: 'https://source.unsplash.com/collection/9011780'
-            images: []
+            images: [],
+            geometry: {
+              type: "Point",
+              coordinates: [randomCity.lng, randomCity.lat]
+            }
         })
 
         const imgUrl = await seedImg()
@@ -85,12 +89,12 @@ const seedDB = async () => {
 
 
         // Get geometry data from geocoder and save to the new Brewery
-        const geoData = await geocoder.forwardGeocode({
-            query: brewery.location,
-            limit: 1
-        }).send()
+        // const geoData = await geocoder.forwardGeocode({
+        //     query: brewery.location,
+        //     limit: 1
+        // }).send()
 
-        brewery.geometry = geoData.body.features[0].geometry
+        // brewery.geometry = geoData.body.features[0].geometry
 
         await brewery.save()
     }

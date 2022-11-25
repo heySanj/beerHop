@@ -1,5 +1,13 @@
 <% layout('layouts/boilerplate') %> 
 
+<div id="map" class="homeMap"></div>
+
+<!-- Create the mapBoxToken variable so that later scripts have access to it -->
+<script>
+  const mapBoxToken = '<%- process.env.MAPBOX_PUBLIC_TOKEN %>'
+  const breweriesJSON = <%- JSON.stringify(breweries) %>
+</script>
+<script src="/javascripts/clusterMap.js"></script>
 
 <h1 class="homeTitle">Hop to your local Brewery! 🍻</h1>
 
