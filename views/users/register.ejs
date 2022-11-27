@@ -1,29 +1,59 @@
 <% layout('./layouts/boilerplate') %> 
 
-<h1>Register</h1>
+<div class="row d-flex justify-content-center align-items-center h-100">
 
-<form action="/user/register" method="POST" novalidate class="needs-validation">
+  <div class="col">
 
-  <div class="form-group mb-3">
-    <label for="name">Username:</label>
-    <input type="text" class="form-control" name="user[username]" id="username" required>
-    <div class="valid-feedback">Looks good!</div>
-    <div class="invalid-feedback">Please enter a valid/unique username.</div>
+    <div class="card" style="border-radius: 1rem;">
+
+      <div class="row g-0">
+
+        <!-- IMAGE DIV -->
+        <div class="col-md-6 col-lg-5 d-none d-md-block">
+          <img src="https://res.cloudinary.com/dx5amze3b/image/upload/c_fill,g_auto,h_2400,w_1600/q_auto:eco/v1669550995/beerHop/elevate-kDPm1On9jfs-unsplash_kfmxqn.jpg"
+            alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+        </div>
+
+        <!-- FORM DIV -->
+        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+          <div class="card-body p-4 p-lg-5 text-black">
+
+            <form action="/user/register" method="POST" novalidate class="needs-validation">
+
+              <div class="d-flex align-items-center mb-3 pb-1">
+                <h1>Register</h1>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="name">Username:</label>
+                <input type="text" class="form-control" name="user[username]" id="username" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid/unique username.</div>
+              </div>
+            
+              <div class="form-group mb-3">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="user[email]" id="email" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid/unique email.</div>
+              </div>
+            
+              <div class="form-group mb-3">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" name="user[password]" id="password" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a password.</div>
+              </div>
+            
+              <button type="submit" class="btn btn-dark">Register</button>
+            </form>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
   </div>
 
-  <div class="form-group mb-3">
-    <label for="email">Email:</label>
-    <input type="email" class="form-control" name="user[email]" id="email" required>
-    <div class="valid-feedback">Looks good!</div>
-    <div class="invalid-feedback">Please enter a valid/unique email.</div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="password">Password:</label>
-    <input type="password" class="form-control" name="user[password]" id="password" required>
-    <div class="valid-feedback">Looks good!</div>
-    <div class="invalid-feedback">Please enter a password.</div>
-  </div>
-
-  <button type="submit" class="btn btn-dark">Register</button>
-</form>
+</div>

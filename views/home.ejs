@@ -1,40 +1,49 @@
-<% layout('layouts/boilerplate') %> 
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="map" class="homeMap"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>🍺 BeerHop</title>
+    
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link rel="stylesheet" href="/stylesheets/app.css">
+        <link rel="stylesheet" href="/stylesheets/home.css">
+        
+    </head>
 
-<!-- Create the mapBoxToken variable so that later scripts have access to it -->
-<script>
-  const mapBoxToken = '<%- process.env.MAPBOX_PUBLIC_TOKEN %>'
-  const breweriesJSON = <%- JSON.stringify(breweries) %>
-</script>
-<script src="/javascripts/clusterMap.js"></script>
+    <body class="d-flex flex-column min-vh-100">
 
-<h1 class="homeTitle">Hop to your local Brewery! 🍻</h1>
+      <!-- background video -->
+      <video autoplay muted loop id="bgVideo">
+        <source src="https://res.cloudinary.com/dx5amze3b/video/upload/q_auto:eco/v1669546463/beerHop/bg/beerhopBG_1_xxjidz.mp4" type="video/mp4">
+      </video>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 barCard mb-4"> <!-- g-3 adds gutter spacing -->
-  <% for( let bar of breweries ) { %>
+      <div class="cover-container d-flex p-3 m-auto flex-column justify-content-center align-items-center">
 
-    <div class="col">
-      <div class="card lg-4 h-100">
+        <h1 class="homeTitle">BeerHop</h1>
+        <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Quas dolorem nisi maiores rem optio tempore odit architecto laboriosam praesentium,
+          ab ratione ex ducimus suscipit corrupti non modi est quo? Explicabo.
+        </p>
+        <a href="/breweries" class="btn btn-outline-dark">View Breweries</a>
 
-        <div class="card-img-top">          
-          <% if (bar.images.length) { %>
-            <img src="<%= bar.images[0].card %>" alt="Brewery Image">
-          <% } else { %>           
-            <img src="https://res.cloudinary.com/dx5amze3b/image/upload/q_auto:eco/c_fill,g_auto,h_480,w_640/v1669271510/beerHop/llguhbracrompilumiwd.jpg" alt="Brewery Image">
-          <% } %>
-          
-        </div>
-
-        <div class="card-body">
-          <h5 class="card-title"><%= bar.name %></h5>
-          <p class="card-text"><%= bar.description %></p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted"><%= bar.location %></small>
-          <a href="/breweries/<%= bar._id %>" class="btn btn-outline-dark">View</a>
-        </div>
       </div>
-    </div>
-  <% } %>
-</div>
+
+
+        
+
+        
+        <!-- <%- include('./partials/footer') %>  -->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+
+    </body>
+
+</html>

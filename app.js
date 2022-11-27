@@ -102,7 +102,7 @@ app.use('/breweries/:id/reviews', reviewRoutes)
 app.use('/user', userRoutes)
 
 app.get('/', async (req, res) => {
-    res.redirect(`/breweries`)
+    res.render('home')
 })
 
 

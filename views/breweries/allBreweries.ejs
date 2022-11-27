@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %> 
+
+<div id="map" class="homeMap"></div>
+
+<!-- Create the mapBoxToken variable so that later scripts have access to it -->
+<script>
+  const mapBoxToken = '<%- process.env.MAPBOX_PUBLIC_TOKEN %>'
+  const breweriesJSON = <%- JSON.stringify(breweries) %>
+</script>
+<script src="/javascripts/clusterMap.js"></script>
+
+<h1 class="homeTitle">Hop to your local Brewery! 🍻</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 barCard mb-4"> <!-- g-3 adds gutter spacing -->
+  <% for( let bar of breweries ) { %>
+
+    <div class="col">
+      <div class="card lg-4 h-100">
+
+        <div class="card-img-top">          
+          <% if (bar.images.length) { %>
+            <img src="<%= bar.images[0].card %>" alt="Brewery Image">
+          <% } else { %>           
+            <img src="https://res.cloudinary.com/dx5amze3b/image/upload/q_auto:eco/c_fill,g_auto,h_480,w_640/v1669271510/beerHop/llguhbracrompilumiwd.jpg" alt="Brewery Image">
+          <% } %>
+          
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title"><%= bar.name %></h5>
+          <p class="card-text"><%= bar.description %></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><%= bar.location %></small>
+          <a href="/breweries/<%= bar._id %>" class="btn btn-outline-dark">View</a>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>

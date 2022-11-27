@@ -8,7 +8,7 @@ const geocoder = mbxGeocoding({ accessToken: mapBoxToken }) // Configure the acc
 
 module.exports.index = async (req, res, next) => {
     const breweries = await Brewery.find({})  
-    res.render('home', { breweries })
+    res.render('breweries/allBreweries', { breweries })
 }
 
 module.exports.renderNewForm =  (req, res) => {
