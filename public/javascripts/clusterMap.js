@@ -5,7 +5,14 @@ const map = new mapboxgl.Map({
   style: "mapbox://styles/heysanj/clavtsygn000u14p7uo1kqhgn",
   center: [133.890970, -28.751407],
   zoom: 3,
+  attributionControl: false,
+  cooperativeGestures: true // Ctrl + Wheel needed to zoom
 });
+
+// Add on screen controls
+map.addControl(new mapboxgl.NavigationControl())
+map.addControl(new mapboxgl.FullscreenControl());
+
 
 map.on("load", () => {
   // Add a new source from our GeoJSON data and

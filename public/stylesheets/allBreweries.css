@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,200;1,9..144,400;1,9..144,500;1,9..144,700;1,9..144,900&family=Rubik:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+.homeTitle {
+  font-size: 3em;
+  font-weight: 900;
+  padding-bottom: 1em;
+  text-align: center;
+}
+
+.homeMap {
+  width: 100%;
+  height: 60vh;
+}
+.homeMap .popup {
+  line-height: 1em;
+}
+.homeMap .popup h4 {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+  font-size: 1.4em;
+}
+.homeMap .popup img {
+  padding-top: 1em;
+  width: 100%;
+}
+.homeMap .mapboxgl-ctrl-bottom-left {
+  display: none;
+}
+
+#mapFade {
+  pointer-events: none;
+  z-index: 1;
+  box-shadow: 1px -200px 59px -16px #e8dfc4 inset;
+  -webkit-box-shadow: 1px -200px 59px -16px #e8dfc4 inset;
+  -moz-box-shadow: 1px -200px 59px -16px #e8dfc4 inset;
+}
+
+.container {
+  z-index: 10;
+  margin-top: -500px;
+}
+.container .barCard .card-img-top {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  height: 300px;
+}
+.container .barCard .card-img-top img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.container .barCard h5 {
+  font-family: "Fraunces", serif;
+  font-weight: 900;
+}
+.container .barCard .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}/*# sourceMappingURL=allBreweries.css.map */

@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-lg-6 scrollReveal">
     <h1 class="detailsHeader"><%= brewery.name %></h1>
     <hr>
     <h4 class="detailsDescription"><em><%= brewery.description %></em></h4>
@@ -97,11 +97,11 @@
   <!-- =================================== Review section here =============================================-->
 
   <% if (brewery.reviews.length) { %>
-    <div class="col-lg-12 mt-3 reviewSection">
+    <div class="col-lg-12 mt-3 reviewSection scrollReveal">
       <h1 class="mt-5">Reviews</h1>    
         <ul class="list-group pt-0">
           <% for( let review of brewery.reviews ) { %>
-            <li class="list-group-item  mt-3">     
+            <li class="list-group-item mt-3 scrollReveal">     
               
               <p class="starability-result" data-rating="<%= review.rating %>">
                 Rated: <%= review.rating %> stars

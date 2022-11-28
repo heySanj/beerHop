@@ -4,7 +4,10 @@ mapboxgl.accessToken = mapBoxToken
     style: 'mapbox://styles/heysanj/clavtsygn000u14p7uo1kqhgn', // style URL
     center: breweryJSON.geometry.coordinates, // starting position [lng, lat]
     zoom: 14, // starting zoom
+    attributionControl: false
 })
+
+map.addControl(new mapboxgl.NavigationControl())
 
 const marker = new mapboxgl.Marker({
     color: "#ebb522"
