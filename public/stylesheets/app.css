@@ -61,26 +61,7 @@ body .list-group-item {
   border-bottom-right-radius: 0;
 }
 
-.reviewBox {
-  background-color: rgb(49, 49, 49);
-  border-radius: 25px;
-  padding: 2em;
-  margin-bottom: 2em;
-  color: #e8dfc4;
-}
-.reviewBox h1 {
-  color: rgb(255, 193, 23);
-}
-.reviewBox label {
-  color: rgba(255, 255, 255, 0.342);
-}
-.reviewBox textarea, .reviewBox textarea:focus {
-  background-color: rgba(0, 0, 0, 0.747);
-  border-color: rgba(0, 0, 0, 0);
-  color: #e8dfc4;
-}
-
-#detailsAccordion .mapButton {
+#detailsAccordion #mapButton {
   font-family: "Fraunces", serif;
   font-weight: 700;
   font-size: 1.3em;

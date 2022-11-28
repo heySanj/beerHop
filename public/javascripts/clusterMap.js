@@ -14,6 +14,7 @@ map.addControl(new mapboxgl.NavigationControl())
 map.addControl(new mapboxgl.FullscreenControl());
 
 
+
 map.on("load", () => {
   // Add a new source from our GeoJSON data and
   // set the 'cluster' option to true. GL-JS will
@@ -109,10 +110,19 @@ map.on("load", () => {
       coordinates[0] += bar.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
-    new mapboxgl.Popup()
+    new mapboxgl.Popup({ className: 'scrollReveal' })
       .setLngLat(coordinates)
       .setHTML(popUpMarkup)
       .addTo(map);
+  });
+
+
+  map.on("mouseenter", "unclustered-point", () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", "unclustered-point", () => {
+    map.getCanvas().style.cursor = "";
   });
 
   map.on("mouseenter", "clusters", () => {

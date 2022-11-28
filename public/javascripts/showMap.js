@@ -22,3 +22,7 @@ const marker = new mapboxgl.Marker({
   .addTo(map)
 
 map.addControl(new mapboxgl.FullscreenControl());
+
+
+// Resize the map when the Show map button is clicked
+document.getElementById("mapButton").addEventListener("click", () => map.resize());

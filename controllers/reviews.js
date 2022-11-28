@@ -3,6 +3,7 @@ const Review = require('../models/review')
 
 module.exports.createReview = async (req, res, next) => {
     const { id } = req.params
+    // const user = await User.findById(id)
     const brewery = await Brewery.findById(id)
     const review = new Review(req.body.review)
     review.author = req.user._id

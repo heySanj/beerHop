@@ -1,5 +1,6 @@
 const Brewery = require('../models/brewery');
 const { cloudinary } = require('../utils/cloudinary')
+const gravatar = require('gravatar')
 
 // MAPBOX
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
@@ -52,7 +53,7 @@ module.exports.showBrewery = async (req, res, next) => {
         return res.redirect('/breweries')
     }
 
-    res.render('breweries/details', { brewery })
+    res.render('breweries/details', { brewery, gravatar })
 }
 
 module.exports.renderEditForm = async (req, res, next) => {

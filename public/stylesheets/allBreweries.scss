@@ -12,6 +12,10 @@
     width: 100%;
     height: 60vh;
 
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    
     .popup{
 
         line-height: 1em;
@@ -25,6 +29,18 @@
             padding-top: 1em;
             width: 100%;
         }
+    }
+    // Notification to block scrolling the map with the mouse wheel/touch
+    .mapboxgl-scroll-zoom-blocker, .mapboxgl-touch-pan-blocker{
+        background: rgba($color: #000000, $alpha: 0.7);
+        width: 40%;
+        height: 20%;
+        border-radius: 15px;
+        position: absolute;
+        font-size: 1.5rem !important;
+        left: 30%;
+        top: 40%;
+        
     }
 
     .mapboxgl-ctrl-bottom-left{

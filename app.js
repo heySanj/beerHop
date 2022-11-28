@@ -5,12 +5,13 @@ const path = require('path');
 const methodOverride = require('method-override')
 const express = require('express');
 const ejsMate = require('ejs-mate')
-const session = require('express-session')
-const flash = require('connect-flash')
+
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const mongoSanitize = require('express-mongo-sanitize')
+
 
 const app = express();
 
@@ -21,6 +22,18 @@ app.use(express.json())
 // To 'fake' put/patch/delete requests:
 app.use(methodOverride('_method'))
 
+// Protecting from injection attacks to the database
+app.use(mongoSanitize())
+
+// ====================== HELMET ==============================
+
+const helmet = require('helmet')
+const { helmetSettings } = require('./utils/helmetSetup')
+app.use(helmet(helmetSettings))
+
+
+// ====================== FILES & FOLDERS =========================
+
 // Views folder and EJS setup:
 app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'))
@@ -29,19 +42,57 @@ app.set('view engine', 'ejs')
 // Serve static files such as JS scripts and CSS styles
 app.use(express.static(path.join(__dirname, '/public')))
 
+
+// ====================== VALIDATION =============================
+
+
+
+// ====================== MONGOOSE SETUP =============================
+
+const mongoose = require('mongoose');
+const dbName = 'beerHop'
+
+mongoose.connect(`${process.env.DB_URI}/${dbName}?retryWrites=true&w=majority`)
+    .then(() => {
+        console.log("=========== MongoDB Connection Open! ==========")
+    })
+    .catch(err => {
+        console.log("MONGODB - ERROR: ", err)
+    })
+
+const db = mongoose.connection
+const Brewery = require('./models/brewery');
+const Review = require('./models/review')
+const { join } = require('path');
+
 // ================== SESSIONS & FLASH ===========================
 
+const session = require('express-session')
+const flash = require('connect-flash')
+const MongoStore = require('connect-mongo')
+
+const store = MongoStore.create({
+    mongoUrl: `${process.env.DB_URI}/${dbName}`,
+    touchAfter: 24 * 60 * 60, // Only update every 24 hours unless a change has been detected     
+    secret: process.env.SECRET
+})
+
+store.on('error', function(e){
+    console.log("SESSION STORE ERROR!")
+})
+
 const sessionConfig = {
-    secret: 'thissecretshouldbebetter!',
+    store: store,
+    name: 'sundaySesh',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true, // Extra security for your cookies!
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Current time in milliseconds + 1 week in milliseconds
         maxAge: 1000 * 60 * 60 * 24 * 7
-    },
-    // store: this will eventually be a different store!
-
+    }  
 }
 app.use(session(sessionConfig))
 app.use(flash())
@@ -68,28 +119,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error')
     next()
 })
-
-// ====================== VALIDATION =============================
-
-
-
-// ====================== MONGOOSE SETUP =============================
-
-const mongoose = require('mongoose');
-const dbName = 'beerHop'
-
-mongoose.connect(`${process.env.DB_URI}/${dbName}?retryWrites=true&w=majority`)
-    .then(() => {
-        console.log("=========== MongoDB Connection Open! ==========")
-    })
-    .catch(err => {
-        console.log("MONGODB - ERROR: ", err)
-    })
-
-const db = mongoose.connection
-const Brewery = require('./models/brewery');
-const Review = require('./models/review')
-const { join } = require('path');
 
 // ======================= ROUTE SETUP ============================
 

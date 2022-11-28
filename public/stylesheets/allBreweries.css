@@ -22,6 +22,16 @@
   padding-top: 1em;
   width: 100%;
 }
+.homeMap .mapboxgl-scroll-zoom-blocker, .homeMap .mapboxgl-touch-pan-blocker {
+  background: rgba(0, 0, 0, 0.7);
+  width: 40%;
+  height: 20%;
+  border-radius: 15px;
+  position: absolute;
+  font-size: 1.5rem !important;
+  left: 30%;
+  top: 40%;
+}
 .homeMap .mapboxgl-ctrl-bottom-left {
   display: none;
 }
