@@ -31,19 +31,20 @@
           <hr class=".d-none .d-sm-block .d-md-none my-3 text-white">
 
           <!-- Dropdown Menu -->
-          <li class="nav-item dropdown d-flex flex-row align-items-center justify-content-end">
+          <li class="nav-item dropdown d-flex flex-column flex-lg-row align-items-center justify-content-end">
 
             <!-- Avatar Image -->
             <img class="rounded-circle shadow-1-strong"
             src="https://avatars.dicebear.com/api/open-peeps/<%= md5(currentUser.email + "sa3s3556xxgtt634sux06") %>.svg" alt="avatar" width="55"
             height="55" />
 
-
+            
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <%= currentUser.username %>
             </a>
+
             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><a class="nav-link" href="/user/logout">Logout</a></li>
+              <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
             </ul>
           </li>
 

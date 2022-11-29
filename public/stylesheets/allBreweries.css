@@ -1,14 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,200;1,9..144,400;1,9..144,500;1,9..144,700;1,9..144,900&family=Rubik:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 .homeTitle {
-  font-size: 3em;
+  font-size: 1.7em;
   font-weight: 900;
   padding-bottom: 1em;
   text-align: center;
 }
+@media only screen and (min-width: 640px) {
+  .homeTitle {
+    font-size: 3em;
+  }
+}
 
 .homeMap {
   width: 100%;
-  height: 40vh;
+  height: 70vh;
 }
 @media only screen and (min-width: 640px) {
   .homeMap {
@@ -29,13 +34,22 @@
 }
 .homeMap .mapboxgl-scroll-zoom-blocker, .homeMap .mapboxgl-touch-pan-blocker {
   background: rgba(0, 0, 0, 0.7);
-  width: 40%;
-  height: 20%;
   border-radius: 15px;
   position: absolute;
-  font-size: 1.5rem !important;
-  left: 30%;
+  font-size: 1rem !important;
+  width: 60%;
+  height: 15%;
+  left: 20%;
   top: 40%;
+}
+@media only screen and (min-width: 640px) {
+  .homeMap .mapboxgl-scroll-zoom-blocker, .homeMap .mapboxgl-touch-pan-blocker {
+    font-size: 1.5rem !important;
+    width: 40%;
+    height: 20%;
+    left: 30%;
+    top: 40%;
+  }
 }
 .homeMap .mapboxgl-ctrl-bottom-left {
   display: none;

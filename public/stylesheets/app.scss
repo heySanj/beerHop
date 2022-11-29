@@ -3,13 +3,22 @@
 
 nav {
     
-    font-size: 1.5em;
+    font-size: 1em;
+
+    @media only screen and (min-width: 640px) {
+        font-size: 1.5em;
+    }
 
     .navbar-brand{
         font-weight: 900;
         font-family: $headingFont;
-        font-size: 2em;
+        font-size: 1.5em;
         letter-spacing: -.04em;
+
+        @media only screen and (min-width: 640px) {
+            font-size: 2em;
+        }
+
     }
 
     .navbar-nav>li>a {

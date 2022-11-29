@@ -2,23 +2,23 @@
 @import "variables";
 
 .homeTitle{
-    font-size: 3em;
+    font-size: 1.7em;
     font-weight: 900;
     padding-bottom: 1em;
     text-align: center;
+
+    @media only screen and (min-width: 640px) {
+        font-size: 3em;
+    }
 }
 
 .homeMap{
     width: 100%;
-    height: 40vh;
+    height: 70vh;
 
     @media only screen and (min-width: 640px) {
         height: 55vh;
     }
-
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
     
     .popup{
 
@@ -37,14 +37,23 @@
     // Notification to block scrolling the map with the mouse wheel/touch
     .mapboxgl-scroll-zoom-blocker, .mapboxgl-touch-pan-blocker{
         background: rgba($color: #000000, $alpha: 0.7);
-        width: 40%;
-        height: 20%;
         border-radius: 15px;
         position: absolute;
-        font-size: 1.5rem !important;
-        left: 30%;
+
+        font-size: 1.0rem !important;
+        width: 60%;
+        height: 15%;
+        left: 20%;
         top: 40%;
         
+        @media only screen and (min-width: 640px) {            
+            font-size: 1.5rem !important;
+            width: 40%;
+            height: 20%;
+            left: 30%;
+            top: 40%;
+        }
+
     }
 
     .mapboxgl-ctrl-bottom-left{

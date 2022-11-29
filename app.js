@@ -95,19 +95,6 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash())
 
-// ==================== PASSING VARIABLES TO EVERY ROUTE ========================
-
-// On each request, if there is a flash: pass it on to the local params.
-app.use((req, res, next) => {
-
-    res.locals.success = req.flash('success')
-    res.locals.error = req.flash('error')
-    res.locals.currentUser = req.user // Also pass through the currently logged in user
-    res.locals.md5 = md5
-
-    next()
-})
-
 // ================== PASSPORT & AUTH ===========================
 
 const User = require('./models/user')
@@ -121,7 +108,18 @@ passport.use(new LocalStrategy(User.authenticate())) // authenticate() is a meth
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+// ==================== PASSING VARIABLES TO EVERY ROUTE ========================
 
+// On each request, if there is a flash: pass it on to the local params.
+app.use((req, res, next) => {
+
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
+    res.locals.currentUser = req.user // Also pass through the currently logged in user
+    res.locals.md5 = md5
+
+    next()
+})
 
 // ======================= ROUTE SETUP ============================
 
