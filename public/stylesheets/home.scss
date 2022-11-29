@@ -12,6 +12,8 @@
 
 body{
     box-shadow: inset 0 0 5rem rgba($color: #000000, $alpha: .4);
+    position:fixed;
+    width: 100vw !important;
 }
 
 
@@ -23,21 +25,31 @@ body{
 
     h1{
         color: $backgroundColour;
-        font-size: 9em;
+        font-size: 5em;
         font-weight: 900;
         padding: 0;
         margin: 0;
-        -webkit-text-stroke: 3px $backgroundColour;
+        -webkit-text-stroke: 1px $backgroundColour;
         text-shadow: 0.2rem 0.3rem 0.2rem rgba($color: #000000, $alpha: 0.2);
+
+        @media only screen and (min-width: 640px) {
+            font-size: 15vw;
+            -webkit-text-stroke: 3px $backgroundColour;
+        }
     }
 
     .lead{
         font-weight: 500;
-        letter-spacing: .2em;
-        font-size: 2em;
+        letter-spacing: .1em;
+        font-size: 1em;
         margin-bottom: 1em;
         color: $backgroundColour;
         text-shadow: 0.05rem 0.1rem 0.1rem rgba($color: #000000, $alpha: 0.3);
+
+        @media only screen and (min-width: 640px) {
+            font-size: 2em;
+            letter-spacing: .2em;
+        }
     }
 
 }

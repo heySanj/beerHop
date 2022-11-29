@@ -14,24 +14,24 @@
         
     </head>
 
-    <body class="d-flex flex-column min-vh-100">
+    <body class="d-flex flex-column">
 
       <!-- background video -->
       <video autoplay muted loop id="bgVideo">
         <source src="https://res.cloudinary.com/dx5amze3b/video/upload/q_auto:eco/v1669546463/beerHop/bg/beerhopBG_1_xxjidz.mp4" type="video/mp4">
       </video>
 
-      <div class="cover-container d-flex p-3 m-auto flex-column justify-content-center align-items-center">
+      <div class="cover-container d-flex m-auto flex-column justify-content-center align-items-center">
 
         <h1 class="homeTitle">BeerHop</h1>
         <p class="lead">HOP TO YOUR LOCAL
         </p>
 
-        <div class="d-flex flex-row">
-          <a href="/breweries" class="btn btn-light mx-1">View Breweries</a>
+        <div class="d-flex flex-column flex-md-row">
+          <a href="/breweries" class="btn btn-light mx-1 my-1">View Breweries</a>
           <% if (!currentUser) { %>
-            <a class="btn btn-light mx-1" href="/user/login">Login</a>
-            <a class="btn btn-dark mx-1" href="/user/register">Register</a>
+            <a class="btn btn-light mx-1 my-1" href="/user/login">Login</a>
+            <a class="btn btn-dark mx-1 my-1" href="/user/register">Register</a>
           <% } %>
         </div>
 
