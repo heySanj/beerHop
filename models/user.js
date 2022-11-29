@@ -9,6 +9,12 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    userAuthority: {
+        type: String,
+        enum: ['admin', 'editor', 'user'],
+        default: 'user',
+        required: true
     }
 })
 

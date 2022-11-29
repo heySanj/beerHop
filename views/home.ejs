@@ -24,11 +24,16 @@
       <div class="cover-container d-flex p-3 m-auto flex-column justify-content-center align-items-center">
 
         <h1 class="homeTitle">BeerHop</h1>
-        <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Quas dolorem nisi maiores rem optio tempore odit architecto laboriosam praesentium,
-          ab ratione ex ducimus suscipit corrupti non modi est quo? Explicabo.
+        <p class="lead">Find your local brewery or pub.
         </p>
-        <a href="/breweries" class="btn btn-outline-dark">View Breweries</a>
+
+        <div class="d-flex flex-row">
+          <a href="/breweries" class="btn btn-light mx-1">View Breweries</a>
+          <% if (!currentUser) { %>
+            <a class="btn btn-light mx-1" href="/user/login">Login</a>
+            <a class="btn btn-dark mx-1" href="/user/register">Register</a>
+          <% } %>
+        </div>
 
       </div>
 

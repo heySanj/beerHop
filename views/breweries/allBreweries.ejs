@@ -36,7 +36,7 @@
         <!-- Create the mapBoxToken variable so that later scripts have access to it -->
         <script>
           const mapBoxToken = '<%- process.env.MAPBOX_PUBLIC_TOKEN %>'
-          const breweriesJSON = <%- JSON.stringify(breweries) %>
+          const breweriesJSON = <%- JSON.stringify(breweries, replacer) %>          
         </script>
         <script src="/javascripts/clusterMap.js"></script>
         

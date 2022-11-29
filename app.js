@@ -11,6 +11,7 @@ const ExpressError = require('./utils/ExpressError')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const mongoSanitize = require('express-mongo-sanitize')
+const gravatar = require('gravatar')
 
 
 const app = express();
@@ -41,10 +42,6 @@ app.set('view engine', 'ejs')
 
 // Serve static files such as JS scripts and CSS styles
 app.use(express.static(path.join(__dirname, '/public')))
-
-
-// ====================== VALIDATION =============================
-
 
 
 // ====================== MONGOOSE SETUP =============================
@@ -114,9 +111,12 @@ passport.deserializeUser(User.deserializeUser())
 
 // On each request, if there is a flash: pass it on to the local params.
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user // Also pass through the currently logged in user
+
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
+    res.locals.currentUser = req.user // Also pass through the currently logged in user
+    res.locals.gravatar = gravatar
+    
     next()
 })
 

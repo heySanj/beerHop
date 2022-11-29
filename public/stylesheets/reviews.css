@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,200;1,9..144,400;1,9..144,500;1,9..144,700;1,9..144,900&family=Rubik:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
 .reviewCard {
-  background-color: rgba(255, 255, 255, 0.281);
+  background-color: rgba(255, 251, 227, 0.514);
   border-radius: 15px;
+  margin: 1.5em 0 !important;
 }
 .reviewCard .star-rating {
   color: rgb(255, 193, 23);
@@ -15,12 +16,17 @@
   margin-left: -3px !important;
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.363);
 }
+.reviewCard .userBox h5 {
+  font-family: "Fraunces", serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
 
 .reviewBox {
   background-color: rgb(49, 49, 49);
-  border-radius: 25px;
-  padding: 2em;
-  margin-bottom: 2em;
+  border-radius: 15px;
+  padding: 1.4em;
+  margin: 2em 0 !important;
   color: #e8dfc4;
 }
 .reviewBox h1 {

@@ -6,6 +6,15 @@ nav .navbar-brand {
   font-weight: 900;
   font-family: "Fraunces", serif;
   font-size: 2em;
+  letter-spacing: -0.04em;
+}
+nav .navbar-nav > li > a {
+  padding: 0;
+  margin: 0 0.5em;
+}
+nav .navbar-nav > li > a:hover {
+  color: rgb(255, 193, 23);
+  border-bottom: 2px solid rgb(255, 193, 23);
 }
 
 body {
@@ -18,6 +27,7 @@ body .container {
 body h1 {
   font-family: "Fraunces", serif;
   font-weight: 900;
+  letter-spacing: -0.04em;
 }
 body article {
   padding-top: 2em;

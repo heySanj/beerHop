@@ -1,6 +1,7 @@
 const Brewery = require('../models/brewery');
 const ExpressError = require('../utils/ExpressError')
 const Review = require('../models/review')
+const User = require('../models/user');
 const { brewerySchema, reviewSchema } = require('../schemas')
 
 
@@ -20,7 +21,7 @@ module.exports.isAuthor = async (req, res, next) => {
 
     // Find the brewery and check to see if the author is logged in
     const brewery = await Brewery.findById(id)
-    if (!brewery.author.equals(req.user._id)) {
+    if (!brewery.author.equals(req.user._id) && req.user.userAuthority !== "admin") {
         req.flash('error', `You do not have permission to do that!`)
         return res.redirect(`../../../breweries/${brewery._id}`)
     }
@@ -33,10 +34,20 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
     // Find the Review and check to see if the author is logged in
     const review = await Review.findById(reviewId)
-    if (!review.author.equals(req.user._id)) {
+    if (!review.author.equals(req.user._id) && req.user.userAuthority !== "admin") {
         req.flash('error', `You do not have permission to do that!`)
-        return res.redirect(`../../../breweries/${id}`)
-        
+        return res.redirect(`../../../breweries/${id}`)        
+    }
+    next()
+}
+
+module.exports.isCreator = async (req, res, next) => {
+
+    const user = await User.findByUsername(req.session.passport.user)
+
+    if (user.userAuthority !== "admin") {
+        req.flash('error', `You do not have permission to do that!`)
+        return res.redirect(`../../../breweries/`)        
     }
     next()
 }

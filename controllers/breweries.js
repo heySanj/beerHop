@@ -1,15 +1,23 @@
 const Brewery = require('../models/brewery');
+const Review = require('../models/review')
 const { cloudinary } = require('../utils/cloudinary')
-const gravatar = require('gravatar')
 
 // MAPBOX
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const mapBoxToken = process.env.MAPBOX_PUBLIC_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken }) // Configure the access Token for mapbox
 
+const replacer = (key, value) => {
+    // Filtering out properties
+    if (key === "reviews" || key === "images" || key === "author") {
+      return undefined;
+    }
+    return value;    
+}
+
 module.exports.index = async (req, res, next) => {
     const breweries = await Brewery.find({})  
-    res.render('breweries/allBreweries', { breweries })
+    res.render('breweries/allBreweries', { breweries, replacer })
 }
 
 module.exports.renderNewForm =  (req, res) => {
@@ -53,7 +61,7 @@ module.exports.showBrewery = async (req, res, next) => {
         return res.redirect('/breweries')
     }
 
-    res.render('breweries/details', { brewery, gravatar })
+    res.render('breweries/details', { brewery, replacer })
 }
 
 module.exports.renderEditForm = async (req, res, next) => {
@@ -102,7 +110,16 @@ module.exports.updateBrewery = async (req, res, next) => {
 module.exports.deleteBrewery = async (req, res, next) => {
 
     const { id } = req.params
-    const deletedBrewery = await Brewery.findByIdAndDelete(id)
-    req.flash('success', `Successfully deleted ${deletedBrewery.name}!`)
+    const brewery = await Brewery.findById(id)
+    const { name } = brewery
+
+    // Delete all review objects
+    brewery.reviews.forEach(async(review) => {        
+        await Review.findByIdAndDelete(review._id)
+    })    
+
+    const deletedBrewery = await Brewery.deleteOne(brewery)
+
+    req.flash('success', `Successfully deleted ${name}!`)
     res.redirect(`/breweries`)
 }

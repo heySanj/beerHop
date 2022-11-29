@@ -2,8 +2,9 @@
 @import "variables";
 
 .reviewCard {
-    background-color: rgba(255, 255, 255, 0.281);
+    background-color: rgba(255, 251, 227, 0.514);
     border-radius: 15px;
+    margin: 1.5em 0 !important;
 
     .star-rating {
         color: $mainColour;
@@ -20,13 +21,21 @@
         -webkit-text-stroke: 1px rgba(0, 0, 0, 0.363);
     }
 
+    .userBox {
+        h5 {
+            font-family: $headingFont;
+            font-weight: 700;
+            letter-spacing: -.04em;
+        }
+    }
+
 }
 
 .reviewBox{
     background-color: $borderColour;
-    border-radius: 25px;
-    padding: 2em;
-    margin-bottom: 2em;
+    border-radius: 15px;
+    padding: 1.4em;
+    margin: 2em 0 !important;
     color: $backgroundColour;
 
     h1{
