@@ -11,8 +11,9 @@ const ExpressError = require('./utils/ExpressError')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const mongoSanitize = require('express-mongo-sanitize')
-const gravatar = require('gravatar')
 
+// Hashing function
+const md5 = require('md5')
 
 const app = express();
 
@@ -115,8 +116,8 @@ app.use((req, res, next) => {
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     res.locals.currentUser = req.user // Also pass through the currently logged in user
-    res.locals.gravatar = gravatar
-    
+    res.locals.md5 = md5
+
     next()
 })
 

@@ -16,6 +16,10 @@
   margin-left: -3px !important;
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.363);
 }
+.reviewCard .userBox {
+  border-right: 2px solid rgba(85, 84, 80, 0.082);
+  padding-right: 1em;
+}
 .reviewCard .userBox h5 {
   font-family: "Fraunces", serif;
   font-weight: 700;

@@ -32,9 +32,11 @@
 
           <!-- Dropdown Menu -->
           <li class="nav-item dropdown d-flex flex-row align-items-center justify-content-end">
-            <!-- Gravatar Image -->
+
+            <!-- Avatar Image -->
             <img class="rounded-circle shadow-1-strong"
-            src="<%= gravatar.url(currentUser.email, {s: '100', r: 'x', d: 'robohash'}, true) %>" alt="avatar" width="65" height="65" />
+            src="https://avatars.dicebear.com/api/open-peeps/<%= md5(currentUser.email + "sa3s3556xxgtt634sux06") %>.svg" alt="avatar" width="55"
+            height="55" />
 
 
             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -5,7 +5,7 @@
 
 <div class="row breweryDetails">
 
-  <div class="col-lg-6 imgBox">
+  <div class="col-lg-6 imgBox scrollReveal">
     <div id="breweryCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
 
@@ -44,9 +44,9 @@
     <h4 class="detailsDescription"><em><%= brewery.description %></em></h4>
     
     <ul class="list-group">
-        <li class="list-group-item">Price of a Pint: $<%= brewery.price %></li>
+        <li class="list-group-item">Average Price of a Pint: $<%= brewery.price %></li>
         <li class="list-group-item">Location: <%= brewery.location %></li>
-        <li class="list-group-item text-muted">Submitted by: <%= brewery.author.username %></li>
+        <!-- <li class="list-group-item text-muted">Submitted by: <%= brewery.author.username %></li> -->
     </ul>
 
 
@@ -110,7 +110,7 @@
             
           <div class="userBox d-flex flex-column justify-content-center align-items-center me-3">
             <img class="rounded-circle shadow-1-strong"
-            src="<%= gravatar.url(review.author.email, {s: '100', r: 'x', d: 'robohash'}, true) %>" alt="avatar" width="95"
+            src="https://avatars.dicebear.com/api/open-peeps/<%= md5(review.author.email + "sa3s3556xxgtt634sux06") %>.svg" alt="avatar" width="95"
             height="95" />
             <h5 class="mt-2"><%= review.author.username %></h5>
           </div>
@@ -120,7 +120,7 @@
             <div class="card-body">                
               <p class="star-rating d-inline"><%= '★'.repeat(review.rating) %></p>
               <p class="star-rating-blank d-inline"><%= '★'.repeat(5 - review.rating) %></p>
-              <p class="small">5 hours ago</p>
+              <p class="small text-muted"><%= moment(review.createdAt).fromNow() %></p>
               <p>
                 <%= review.body %>
               </p>

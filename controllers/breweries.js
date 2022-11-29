@@ -7,6 +7,10 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding')
 const mapBoxToken = process.env.MAPBOX_PUBLIC_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken }) // Configure the access Token for mapbox
 
+// Moment to calculate when reviews are poster
+const moment = require('moment')
+
+// Filter out data when converting to JSON so that they are not made public
 const replacer = (key, value) => {
     // Filtering out properties
     if (key === "reviews" || key === "images" || key === "author") {
@@ -15,9 +19,20 @@ const replacer = (key, value) => {
     return value;    
 }
 
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+}
+
+// ============================== ROUTE FUNCTIONS ==============================================
+
 module.exports.index = async (req, res, next) => {
     const breweries = await Brewery.find({})  
-    res.render('breweries/allBreweries', { breweries, replacer })
+    res.render('breweries/allBreweries', { breweries, replacer, shuffleArray })
 }
 
 module.exports.renderNewForm =  (req, res) => {
@@ -55,13 +70,13 @@ module.exports.showBrewery = async (req, res, next) => {
             path: 'author'
         }
     }).populate('author') // And also populate the author of each Brewery
-
+    
     if(!brewery){
         req.flash('error', 'Sorry, that brewery could not be found. 😞')
         return res.redirect('/breweries')
     }
 
-    res.render('breweries/details', { brewery, replacer })
+    res.render('breweries/details', { brewery, replacer, moment })
 }
 
 module.exports.renderEditForm = async (req, res, next) => {

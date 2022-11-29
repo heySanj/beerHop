@@ -54,7 +54,8 @@ module.exports.helmetSettings = {
                 "data:",
                 "https://res.cloudinary.com/dx5amze3b/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
                 "https://images.unsplash.com/",
-                "https://s.gravatar.com/"
+                "https://s.gravatar.com/",
+                "https://avatars.dicebear.com/"
             ],
             fontSrc    : [ "'self'", ...fontSrcUrls ],
             mediaSrc   : [ "https://res.cloudinary.com/dx5amze3b/" ],

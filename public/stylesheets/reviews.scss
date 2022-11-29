@@ -22,6 +22,10 @@
     }
 
     .userBox {
+
+        border-right: 2px solid rgba(85, 84, 80, 0.082);
+        padding-right: 1em;
+
         h5 {
             font-family: $headingFont;
             font-weight: 700;
