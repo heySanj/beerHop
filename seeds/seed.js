@@ -28,6 +28,7 @@ mongoose.connect(`${process.env.DB_URI}/${dbName}?retryWrites=true&w=majority`)
 
 const db = mongoose.connection
 const Brewery = require('../models/brewery')
+const Review = require('../models/review')
 
 
 // ======================= UNSPLASH API =============================
@@ -41,7 +42,7 @@ const Brewery = require('../models/brewery')
           collections: 9011780,
         },
       })
-      return resp.data.urls.full
+      return resp.data.urls.regular
     } catch (err) {
       console.error(err)
     }
@@ -53,9 +54,10 @@ const sample = array => array[Math.floor(Math.random() * array.length)]
 const seedDB = async () => {
 
     // await Brewery.deleteMany({}) // Delete all existing data before seeding with new data
+    // await Review.deleteMany({})
 
     // Generate 50 breweries
-    for (let i = 0; i < 6; i++){
+    for (let i = 0; i < 20; i++){
 
         const randomCity = cities[Math.floor(Math.random()*cities.length)]
         const randomName = `${sample(name)} ${sample(suffix)}`
@@ -67,7 +69,7 @@ const seedDB = async () => {
             price: randomPrice,
             description: randomDescription,
             location: `${randomCity.city}, ${randomCity.admin_name}`,
-            author: '637d88e18682534143525143',
+            author: '638535fba661906e891ebec8',
             // image: await seedImg()
             // image: 'https://source.unsplash.com/collection/9011780'
             images: [],
