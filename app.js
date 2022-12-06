@@ -41,10 +41,6 @@ app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-// Serve static files such as JS scripts and CSS styles
-app.use(express.static(path.join(__dirname, '/public')))
-
-
 // ====================== MONGOOSE SETUP =============================
 
 const mongoose = require('mongoose');
@@ -120,6 +116,11 @@ app.use((req, res, next) => {
 
     next()
 })
+
+// =============== Serve static files such as JS scripts and CSS styles ============
+
+// Put this middleware after the others as it can cause following middleware not to execute
+app.use(express.static(path.join(__dirname, 'public')))
 
 // ======================= ROUTE SETUP ============================
 
