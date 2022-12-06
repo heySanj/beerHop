@@ -132,8 +132,7 @@ app.use('/breweries/:id/reviews', reviewRoutes)
 app.use('/user', userRoutes)
 
 app.get('/', async (req, res) => {
-    currentUser = req.user
-    res.render('home', { currentUser })
+    res.render('home')
 })
 
 
