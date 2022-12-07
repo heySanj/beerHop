@@ -121,7 +121,7 @@ app.use((req, res, next) => {
 
 // Put this middleware after the others as it can cause following middleware not to execute
 // app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // ======================= ROUTE SETUP ============================
 
