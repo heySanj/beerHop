@@ -120,7 +120,8 @@ app.use((req, res, next) => {
 // =============== Serve static files such as JS scripts and CSS styles ============
 
 // Put this middleware after the others as it can cause following middleware not to execute
-app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('public'));
 
 // ======================= ROUTE SETUP ============================
 
