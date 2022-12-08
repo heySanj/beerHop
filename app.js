@@ -41,10 +41,6 @@ app.engine('ejs', ejsMate)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-// Serve static files such as JS scripts and CSS styles
-app.use(express.static(path.join(__dirname, '/public')))
-
-
 // ====================== MONGOOSE SETUP =============================
 
 const mongoose = require('mongoose');
@@ -92,6 +88,14 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }  
 }
+
+// Set session cookies to secure in production environments
+if (app.get('env') === 'production'){
+    app.set('trust proxy', 1) // trust first proxy
+    sessionConfig.cookie.secure = true // serve secure cookies
+}
+
+
 app.use(session(sessionConfig))
 app.use(flash())
 
@@ -120,6 +124,11 @@ app.use((req, res, next) => {
 
     next()
 })
+
+// =============== Serve static files such as JS scripts and CSS styles ============
+
+// Put this middleware after the others as it can cause following middleware not to execute
+app.use(express.static(path.join(__dirname, 'public')))
 
 // ======================= ROUTE SETUP ============================
 

@@ -60,6 +60,7 @@ module.exports.helmetSettings = {
             fontSrc    : [ "'self'", ...fontSrcUrls ],
             mediaSrc   : [ "https://res.cloudinary.com/dx5amze3b/" ],
             childSrc   : [ "blob:" ],
+            upgradeInsecureRequests: null
         }
     },
     crossOriginEmbedderPolicy: false
