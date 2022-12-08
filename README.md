@@ -11,6 +11,7 @@ The project was to demonstrate my ability to create a full CRUD and MVC web app.
 The application was built using NodeJS and Express. For data storage, MongoDB Atlas was used. This was my first time using a NoSQL database system, and I'm glad I now have the experience.
 
 ### 🌐 App Link
+https://beerhop.sanj.zone/
 https://beerhop.onrender.com/
 
 ### 🖼 Screenshots
